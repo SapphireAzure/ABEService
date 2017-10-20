@@ -77,7 +77,7 @@ Query一条在db中的信息
 tableName 表示要查询表的名称
 会打印返回整个表的信息
  */
-func (co DBConnector) Query(tableName string){
+func (co DBConnector) Query(tableName string)(rows *sql.Rows){
 	var queryStr string = "SELECT * from "+tableName
 
 	rows,err := co.targetDB.Query(queryStr)
@@ -85,25 +85,11 @@ func (co DBConnector) Query(tableName string){
 		log.Fatal(err)
 
 	}
-	defer rows.Close()
-
-
-	for rows.Next(){
-		var(
-			id int
-			policy string
-			user string
-		)
-		err := rows.Scan(&id,&policy,&user)
-		if(err != nil) {
-			log.Fatal(err)
-		}
-		fmt.Println(id,policy,user)
-	}
 	err=rows.Err()
 	if err != nil {
 		log.Fatal(err)
 	}
+	return rows
 }
 
 /**

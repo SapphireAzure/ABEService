@@ -16,9 +16,8 @@ func main(){
 	ABES = ABEservice.ServiceInit("PolicyDB")
 	ABES.Query("policy")
 	ap := []string{"abc","123","ABE"}
-	ABES.Encrypt("33","qwer",ap)
+	ABES.PropertyUpdate("33",ap)
 	ABES.Query("policy")
-
-
+	//数据库关闭
 	ABES.Close()
 }
